@@ -144,6 +144,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent # or manually set the path of 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 BASE_COUNTRY = "USA"
-CSRF_TRUSTED_ORIGINS = ["https://second-hand-life-93533e459938.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://secondhand-life-89e6017e760c.herokuapp.com/"]
 import django_heroku
 django_heroku.settings(locals())
