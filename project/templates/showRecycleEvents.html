@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+
+{% block title %}Explore{% endblock %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+    #recycle-jumbotron h3 {
+        font-family: 'Young Serif', cursive;
+        font-size: 60px;
+        margin-bottom: 40px;
+    }
+    #recycle-jumbotron {
+        height: 350px;
+        background-image: url('../assets/recycle.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        color: white;
+    }
+</style>
+<div class="p-5 mb-5" id="recycle-jumbotron" style="height: 350px; background-image: url('../static/assets/recycle.png');   background-repeat: no-repeat;   background-attachment: fixed;    background-size: cover;    color: white;">
+  <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+    <h3 class="mt-3" style="@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');    font-family: 'Young Serif', cursive;">Recycle</h3>
+    <div class="d-flex justify-content-center">
+      <form class="w-100 mx-4" method="GET" action="{% url 'zipSearch' %}">
+        <div class="input-group rounded">
+          <input type="search" name="zipSearch" class="form-control " placeholder="Search Zipcode" aria-label="Search" aria-describedby="search-addon" style="border-bottom-right-radius: 0px;border-top-right-radius: 0px;"/>
+          <span class="input-group-text bg-dark text-light border-0" id="search-addon">
+            <button type="submit" class="bg-dark text-light border-0"><i class="fas fa-search"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="mt-3">
+      <h5 ><a href="{% url 'recycle' %}" class="text-decoration-none text-white">Clear Filters</a></h5>
+    </div>
+  </div>
+</div>
+
+<div class="container" >
+  <div class="row">
+    {% for detail in details %}
+    <div class="col-lg-4 col-md-6 col-12 mb-5">
+      <div class="card shadow-sm" style="width: 18rem; background-color: rgb(31,41,55); color: white;">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ detail.recycler }}
+            <h6> created by {{ detail.organizer.username }}</h6>
+            <p>
+              <strong>date:</strong> {{ detail.date_of }}
+            <br>
+              <strong>zipcode:</strong> {{detail.zipcode}}
+            <br>
+              <strong>fee:</strong> ${{ detail.fee }}
+            </p>
+          </h5>
+          <p class="card-text">{{ detail.instructions }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- <div class="main">
+  {% for detail in details %}
+    <h5>{{detail.title}}<h5></h5>
+    <img src="{{detail.img}}">
+    {% if detail.saleType == 1 %}
+      <h6>auction</h6>
+    {% elif detail.saleType == 2 %}
+      <h6>spot sale</h6>
+    {% elif detail.saleType == 3 %}
+      <h6>not for sale</h6>
+    {% endif %}
+    <h6>{{detail.artist}}</h6>
+    {% if detail.saleType == 1 %}
+      <form action="{% url 'show_auction' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% elif detail.saleType == 2 %}
+      <form action="{% url 'show_spot' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% elif detail.saleType == 3 %}
+      <form action="{% url 'show_not_selling' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% endif %}
+  {% endfor %}
+</div> -->
+
+{% endblock %}

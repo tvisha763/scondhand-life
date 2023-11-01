@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+{% for message in messages %}
+<br>
+<br>
+<div class="alert mt-3 alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<div class="container" style="color: white;">
+    <div class="row pt-5">
+        <div class="col-12">
+            <br>
+
+            <h1 class="ms-4">Your Devices</h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                {% for detail in details %}
+                <div class="col-lg-4 col-md-6 col-12 mb-5">
+                    <div class="card shadow-sm" style="width: 18rem; background-color: rgb(31,41,55); color: white;">
+                    <img src="{{ detail.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body text-center" >
+                        <h5 class="card-title">{{ detail.title|title }}
+                       
+                        <h6 class="text">
+                        {% if detail.sale_type == 1 %}
+                            Sale
+                        {% elif detail.sale_type == 2 %}
+                            Donation
+                        {% endif %}
+                        </h6>
+                        </h5>
+                        <p class="card-text">{{ detail.description }}</p>
+                        
+                    </div>
+                    <a href="{% url 'show_device' detail.id %}" class="btn btn-info" style="color: white; border-radius: 0px;">View</a>
+                        {% if detail.sale_type == 1 %}
+                            <a href="{% url 'sold' detail.id %}" style="color: white; border-radius: 0px;" class="btn btn-success">Sold</a>
+                        {% elif detail.sale_type == 2 %}
+                            <a href="{% url 'sold' detail.id %}" class="btn btn-success" style="color: white; border-radius: 0px;">Donated</a>
+                        {% endif %}
+                        <a href="{% url 'dlt_post' detail.id %}" class="btn btn-danger" style="color: white; border-top-left-radius: 0px;border-top-right-radius: 0px;">Delete</a>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="color: white;">
+    <div class="row pt-5">
+        <div class="col-12">
+            <br>
+
+            <h1 class="ms-4">Your Recycle Events</h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                {% for event in events %}
+                <div class="col-lg-4 col-md-6 col-12 mb-5">
+                    <div class="card shadow-sm" style="width: 18rem; background-color: rgb(31,41,55); color: white;">
+                      <div class="card-body text-center">
+                        <h5 class="card-title">{{ event.recycler }}
+                          <h6> created by {{ event.organizer.username }}</h6>
+                          <p>
+                            <strong>date:</strong> {{ event.date_of }}
+                          <br>
+                            <strong>zipcode:</strong> {{event.zipcode}}
+                          <br>
+                            <strong>fee:</strong> ${{ event.fee }}
+                          </p>
+                        </h5>
+                        <p class="card-text">{{ event.instructions }}</p>
+                      </div>
+                      <a href="{% url 'dlt_event' event.id %}" class="btn btn-danger" style="color: white; border-top-left-radius: 0px;border-top-right-radius: 0px;">Delete</a>
+
+                    </div>
+                  </div>
+              
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

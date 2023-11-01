@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+body {
+  padding-top: 3rem;
+  color: #ffffff;
+  background-color: rgb(40, 31, 57);
+}
+
+#explore-jumbotron {
+  height: 350px;
+  background-image: url('../assets/explore-transformed.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+}
+#explore-jumbotron h3 {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.device-img{
+  min-height: 150px;
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 500px;
+}

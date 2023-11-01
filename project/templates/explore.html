@@ -1,0 +1,124 @@
+{% extends 'main.html' %}
+
+{% block title %}Explore{% endblock %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+    #explore-jumbotron h3 {
+        font-family: 'Young Serif', cursive;
+        font-size: 60px;
+        margin-bottom: 40px;
+    }
+    #explore-jumbotron {
+        height: 350px;
+        background-image: url('../assets/explore-transformed.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        color: white;
+    }
+</style>
+<div class="p-5 mb-5" id="explore-jumbotron" style="height: 350px; background-image: url('../static/assets/explore-transformed.png');   background-repeat: no-repeat;   background-attachment: fixed;    background-size: cover;    color: white;">
+  <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+    <h3 class="mt-3" style="@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');    font-family: 'Young Serif', cursive;">Explore</h3>
+    <div class="d-flex justify-content-center">
+      <form class="w-100 mx-4" method="GET" action="{% url 'deviceSearch' %}">
+        <div class="input-group rounded">
+          <input type="search" name="deviceSearch" class="form-control " placeholder="Search Device" aria-label="Search" aria-describedby="search-addon" style=" border-bottom-right-radius: 0px;border-top-right-radius: 0px;"/>
+          <span class="input-group-text bg-dark text-light border-0" id="search-addon">
+            <button type="submit" class="bg-dark text-light border-0"><i class="fas fa-search"></i></button>
+          </span>
+        </div>
+      </form>
+      
+    <!-- </div>
+    <div class="d-flex mt-3 justify-content-center align-items-center"> -->
+      <form class="w-100" method="GET" action="{% url 'typeSearch' %}" style="width: 40px;">
+        <div class="input-group rounded">
+          <select class="form-select" name="typeSearch">
+            <option value="0">--select--</option>
+            <option value="1">Sale</option>
+            <option value="2">Donation</option>
+          </select>
+          <!-- <input type="search" name="typeSearch" class="form-control rounded" placeholder="Search sale type (auction, spot sale, not for sale)" aria-label="Search" aria-describedby="search-addon" /> -->
+          <span class="input-group-text bg-dark text-light border-0" id="search-addon">
+            <button type="submit" class="bg-dark text-light border-0">Filter</button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="mt-3">
+      <h5 ><a href="{% url 'explore' %}" class="text-decoration-none text-white">Clear Filters</a></h5>
+    </div>
+  </div>
+</div>
+
+<div class="container" >
+  <div class="row">
+    {% for detail in details %}
+    <div class="col-lg-4 col-md-6 col-12 mb-5">
+      <div class="card shadow-sm" style="width: 18rem; background-color: rgb(31,41,55); color: white;">
+        <img src="{{ detail.image.url }}" class="card-img-top" alt="...">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ detail.title|title }}
+            <h6>by {{ detail.seller.username }}</h6>
+            <h6>
+                {% if detail.sale_type == 1 %}
+                ${{ detail.price }}
+                {% endif %}
+                
+            </h6>
+            <h6 class="text">
+            {% if detail.sale_type == 1 %}
+              Sale
+            {% elif detail.sale_type == 2 %}
+              Donation
+            {% endif %}
+            </h6>
+          </h5>
+          <p class="card-text">{{ detail.description }}</p>
+        </div>
+        <a href="{% url 'show_device' detail.id %}" class="btn btn-info" style="color: white; border-top-left-radius: 0px;border-top-right-radius: 0px;">View</a>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- <div class="main">
+  {% for detail in details %}
+    <h5>{{detail.title}}<h5></h5>
+    <img src="{{detail.img}}">
+    {% if detail.saleType == 1 %}
+      <h6>auction</h6>
+    {% elif detail.saleType == 2 %}
+      <h6>spot sale</h6>
+    {% elif detail.saleType == 3 %}
+      <h6>not for sale</h6>
+    {% endif %}
+    <h6>{{detail.artist}}</h6>
+    {% if detail.saleType == 1 %}
+      <form action="{% url 'show_auction' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% elif detail.saleType == 2 %}
+      <form action="{% url 'show_spot' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% elif detail.saleType == 3 %}
+      <form action="{% url 'show_not_selling' %}" method="post">
+        {% csrf_token %}
+        <button>View</button>
+        <input type="hidden" value="{{detail.title}}" name="artToView" id="artToView">
+      </form>
+    {% endif %}
+  {% endfor %}
+</div> -->
+
+{% endblock %}

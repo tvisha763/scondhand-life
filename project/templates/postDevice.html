@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+
+{% block title %}Post Device{% endblock %}
+{% block content %}
+
+
+
+<div class="container p-5">
+    <div class="row py-3 justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow text-dark py-4" style="background-color: rgb(31,41,55); color: white;">
+                <div class="card-body" style="color: white;">
+                    <div class="card-title text-center">
+                        <h3 style="color: white;">Post Device</h3>
+                    </div>
+                    {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                    <div class="container">
+                        <form class="row" method="POST" action="{% url 'post' %}" enctype="multipart/form-data">
+                           {% csrf_token %}
+                           <div class="col-12 mb-3">
+                              <label for="formFile" class="form-label">Image</label>
+                              <input class="form-control" type="file" id="formFile" name="image" accept="image/*" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                              <label for="title" class="form-label">Post Title</label>
+                              <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="saleType" class="form-label">Sale Type</label>
+                                <select class="form-select" name="sale-type" id="saleType" required>
+                                  <option value="1">Sale</option>
+                                  <option value="2" selected >Donation</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                              <label for="description" class="form-label">Description</label>
+                              <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                            </div>
+                            <div id="sale" class="my-4" style="display: none;">
+                                <h5 class="text-center col-12">Sale</h5>
+                                <div class="col-12">
+                                   <label for="price" class="form-label">Price</label>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                      </div>
+                                      <input type="number" class="form-control" id="price" name="price" placeholder="USD">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" value="Post Device" class="btn btn-info" style="color: white;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#saleType').change(function(){
+        let val = $(this).val()
+        if (val == 1) {
+            $('#sale').show()
+        } else {
+            $('#sale').hide()
+        }
+    });
+</script>
+    
+
+{% endblock %}
